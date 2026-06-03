@@ -68,8 +68,7 @@ echo -ne "${WHITE}│${RESET}  ${BOLD}SNMP enumeration${RESET} (snmpwalk with de
 read -r DO_SNMP
 echo -ne "${WHITE}│${RESET}  ${BOLD}DNS recon${RESET} (reverse lookup + zone transfer attempt)? [y/n]: "
 read -r DO_DNS
-echo -ne "${WHITE}│${RESET}  ${BOLD}Skip netdiscover${RESET} (passive ARP — slow, skip if in a hurry)? [y/n]: "
-read -r SKIP_NETDISCOVER
+SKIP_NETDISCOVER="y" # removed
 echo -e "${BOLD}${WHITE}└────────────────────────────────────────────────────────────┘${RESET}"
 
 # Build nmap flags based on mode
@@ -191,13 +190,7 @@ HOST_COUNT=$(wc -l < "$HOSTS_FILE")
 log "Discovered $HOST_COUNT unique hosts"
 cat "$HOSTS_FILE" | tee -a "$TXT_REPORT"
 
-if [[ ! "$SKIP_NETDISCOVER" =~ ^[Yy] ]] && command -v netdiscover &>/dev/null; then
-  log "Running netdiscover (passive 15 s) …"
-  timeout 15 netdiscover -p -r "$SUBNET" 2>/dev/null \
-    > "$OUTDIR/raw/netdiscover.txt" || true
-else
-  info "Skipping netdiscover."
-fi
+# netdiscover removed — unreliable on most networks, hangs indefinitely
 
 # ── Phase 2 – Port & Service Scan ────────────────────────────────────────────
 section "Phase 2 – Port & Service Scan  [$SCAN_LABEL]"
