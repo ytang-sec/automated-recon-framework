@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 #  LOCAL NETWORK RECON SCRIPT — Interactive Mode
-#  Tools: nmap, nikto, arp-scan, netdiscover, enum4linux, smbclient,
+#  Tools: nmap, nikto, arp-scan, enum4linux, smbclient,
 #         snmpwalk, curl, whatweb, dnsrecon, masscan (optional)
 #  Output: HTML + plain-text report
 #  Usage:  sudo ./wifi_recon.sh [CIDR]
@@ -143,7 +143,7 @@ read -r
 section "Dependency Check"
 REQUIRED=(nmap arp-scan curl)
 [[ "$DO_NIKTO" =~ ^[Yy] ]] && REQUIRED+=(nikto)
-OPTIONAL=(netdiscover enum4linux smbclient snmpwalk masscan whatweb dnsrecon)
+OPTIONAL=(enum4linux smbclient snmpwalk masscan whatweb dnsrecon)
 for t in "${REQUIRED[@]}"; do
   command -v "$t" &>/dev/null \
     && log "$t found" \
